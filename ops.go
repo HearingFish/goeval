@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"go/token"
 	"reflect"
+	"strconv"
 )
 
 // ComputeBinaryOp executes the corresponding binary operation (+, -, etc) on two interfaces.
@@ -18,6 +19,10 @@ func ComputeBinaryOp(xI, yI interface{}, op token.Token) (interface{}, error) {
 			switch op {
 			case token.ADD:
 				return x + y, nil
+			case token.LAND:
+				return x == y, nil
+			case token.NEQ:
+				return x != y, nil
 			}
 		case int:
 			x := xI.(int)
@@ -49,6 +54,10 @@ func ComputeBinaryOp(xI, yI interface{}, op token.Token) (interface{}, error) {
 				return x <= y, nil
 			case token.GEQ:
 				return x >= y, nil
+			case token.EQL:
+				return x == y, nil
+			case token.NEQ:
+				return x != y, nil
 			}
 		case int8:
 			x := xI.(int8)
@@ -80,6 +89,10 @@ func ComputeBinaryOp(xI, yI interface{}, op token.Token) (interface{}, error) {
 				return x <= y, nil
 			case token.GEQ:
 				return x >= y, nil
+			case token.EQL:
+				return x == y, nil
+			case token.NEQ:
+				return x != y, nil
 			}
 		case int16:
 			x := xI.(int16)
@@ -111,6 +124,10 @@ func ComputeBinaryOp(xI, yI interface{}, op token.Token) (interface{}, error) {
 				return x <= y, nil
 			case token.GEQ:
 				return x >= y, nil
+			case token.EQL:
+				return x == y, nil
+			case token.NEQ:
+				return x != y, nil
 			}
 		case int32:
 			x := xI.(int32)
@@ -142,6 +159,10 @@ func ComputeBinaryOp(xI, yI interface{}, op token.Token) (interface{}, error) {
 				return x <= y, nil
 			case token.GEQ:
 				return x >= y, nil
+			case token.EQL:
+				return x == y, nil
+			case token.NEQ:
+				return x != y, nil
 			}
 		case int64:
 			x := xI.(int64)
@@ -173,6 +194,10 @@ func ComputeBinaryOp(xI, yI interface{}, op token.Token) (interface{}, error) {
 				return x <= y, nil
 			case token.GEQ:
 				return x >= y, nil
+			case token.EQL:
+				return x == y, nil
+			case token.NEQ:
+				return x != y, nil
 			}
 		case uint:
 			x := xI.(uint)
@@ -204,6 +229,10 @@ func ComputeBinaryOp(xI, yI interface{}, op token.Token) (interface{}, error) {
 				return x <= y, nil
 			case token.GEQ:
 				return x >= y, nil
+			case token.EQL:
+				return x == y, nil
+			case token.NEQ:
+				return x != y, nil
 			}
 		case uint8:
 			x := xI.(uint8)
@@ -235,6 +264,10 @@ func ComputeBinaryOp(xI, yI interface{}, op token.Token) (interface{}, error) {
 				return x <= y, nil
 			case token.GEQ:
 				return x >= y, nil
+			case token.EQL:
+				return x == y, nil
+			case token.NEQ:
+				return x != y, nil
 			}
 		case uint16:
 			x := xI.(uint16)
@@ -266,6 +299,10 @@ func ComputeBinaryOp(xI, yI interface{}, op token.Token) (interface{}, error) {
 				return x <= y, nil
 			case token.GEQ:
 				return x >= y, nil
+			case token.EQL:
+				return x == y, nil
+			case token.NEQ:
+				return x != y, nil
 			}
 		case uint32:
 			x := xI.(uint32)
@@ -297,6 +334,10 @@ func ComputeBinaryOp(xI, yI interface{}, op token.Token) (interface{}, error) {
 				return x <= y, nil
 			case token.GEQ:
 				return x >= y, nil
+			case token.EQL:
+				return x == y, nil
+			case token.NEQ:
+				return x != y, nil
 			}
 		case uint64:
 			x := xI.(uint64)
@@ -328,6 +369,10 @@ func ComputeBinaryOp(xI, yI interface{}, op token.Token) (interface{}, error) {
 				return x <= y, nil
 			case token.GEQ:
 				return x >= y, nil
+			case token.EQL:
+				return x == y, nil
+			case token.NEQ:
+				return x != y, nil
 			}
 		case uintptr:
 			x := xI.(uintptr)
@@ -359,6 +404,10 @@ func ComputeBinaryOp(xI, yI interface{}, op token.Token) (interface{}, error) {
 				return x <= y, nil
 			case token.GEQ:
 				return x >= y, nil
+			case token.EQL:
+				return x == y, nil
+			case token.NEQ:
+				return x != y, nil
 			}
 		case complex64:
 			x := xI.(complex64)
@@ -372,6 +421,10 @@ func ComputeBinaryOp(xI, yI interface{}, op token.Token) (interface{}, error) {
 				return x * y, nil
 			case token.QUO:
 				return x / y, nil
+			case token.EQL:
+				return x == y, nil
+			case token.NEQ:
+				return x != y, nil
 			}
 		case complex128:
 			x := xI.(complex128)
@@ -385,6 +438,10 @@ func ComputeBinaryOp(xI, yI interface{}, op token.Token) (interface{}, error) {
 				return x * y, nil
 			case token.QUO:
 				return x / y, nil
+			case token.EQL:
+				return x == y, nil
+			case token.NEQ:
+				return x != y, nil
 			}
 		case float32:
 			x := xI.(float32)
@@ -406,6 +463,10 @@ func ComputeBinaryOp(xI, yI interface{}, op token.Token) (interface{}, error) {
 				return x <= y, nil
 			case token.GEQ:
 				return x >= y, nil
+			case token.EQL:
+				return x == y, nil
+			case token.NEQ:
+				return x != y, nil
 			}
 		case float64:
 			x := xI.(float64)
@@ -427,9 +488,452 @@ func ComputeBinaryOp(xI, yI interface{}, op token.Token) (interface{}, error) {
 				return x <= y, nil
 			case token.GEQ:
 				return x >= y, nil
+			case token.EQL:
+				return x == y, nil
+			case token.NEQ:
+				return x != y, nil
 			}
 		case bool:
 			x := xI.(bool)
+			y := yI.(bool)
+			switch op {
+			// Bool
+			case token.LAND:
+				return x && y, nil
+			case token.LOR:
+				return x || y, nil
+			}
+		}
+	} else {
+		switch yI.(type) {
+		case string:
+			x := xI.(string)
+			y := yI.(string)
+			switch op {
+			case token.ADD:
+				return x + y, nil
+			case token.EQL:
+				return x == y, nil
+			case token.NEQ:
+				return x != y, nil
+			}
+		case int:
+			x, _ := strconv.Atoi(xI.(string))
+			y := yI.(int)
+			switch op {
+			case token.ADD:
+				return x + y, nil
+			case token.SUB:
+				return x - y, nil
+			case token.MUL:
+				return x * y, nil
+			case token.QUO:
+				return x / y, nil
+			case token.REM:
+				return x % y, nil
+			case token.AND:
+				return x & y, nil
+			case token.OR:
+				return x | y, nil
+			case token.XOR:
+				return x ^ y, nil
+			case token.AND_NOT:
+				return x &^ y, nil
+			case token.LSS:
+				return x < y, nil
+			case token.GTR:
+				return x > y, nil
+			case token.LEQ:
+				return x <= y, nil
+			case token.GEQ:
+				return x >= y, nil
+			case token.EQL:
+				return x == y, nil
+			case token.NEQ:
+				return x != y, nil
+			}
+		case int8:
+			x1, _ := strconv.Atoi(xI.(string))
+			x := int8(x1)
+			y := yI.(int8)
+			switch op {
+			case token.ADD:
+				return x + y, nil
+			case token.SUB:
+				return x - y, nil
+			case token.MUL:
+				return x * y, nil
+			case token.QUO:
+				return x / y, nil
+			case token.REM:
+				return x % y, nil
+			case token.AND:
+				return x & y, nil
+			case token.OR:
+				return x | y, nil
+			case token.XOR:
+				return x ^ y, nil
+			case token.AND_NOT:
+				return x &^ y, nil
+			case token.LSS:
+				return x < y, nil
+			case token.GTR:
+				return x > y, nil
+			case token.LEQ:
+				return x <= y, nil
+			case token.GEQ:
+				return x >= y, nil
+			case token.EQL:
+				return x == y, nil
+			case token.NEQ:
+				return x != y, nil
+			}
+		case int16:
+			x1, _ := strconv.Atoi(xI.(string))
+			x := int16(x1)
+			y := yI.(int16)
+			switch op {
+			case token.ADD:
+				return x + y, nil
+			case token.SUB:
+				return x - y, nil
+			case token.MUL:
+				return x * y, nil
+			case token.QUO:
+				return x / y, nil
+			case token.REM:
+				return x % y, nil
+			case token.AND:
+				return x & y, nil
+			case token.OR:
+				return x | y, nil
+			case token.XOR:
+				return x ^ y, nil
+			case token.AND_NOT:
+				return x &^ y, nil
+			case token.LSS:
+				return x < y, nil
+			case token.GTR:
+				return x > y, nil
+			case token.LEQ:
+				return x <= y, nil
+			case token.GEQ:
+				return x >= y, nil
+			case token.EQL:
+				return x == y, nil
+			case token.NEQ:
+				return x != y, nil
+			}
+		case int32:
+			x1, _ := strconv.Atoi(xI.(string))
+			x := int32(x1)
+			y := yI.(int32)
+			switch op {
+			case token.ADD:
+				return x + y, nil
+			case token.SUB:
+				return x - y, nil
+			case token.MUL:
+				return x * y, nil
+			case token.QUO:
+				return x / y, nil
+			case token.REM:
+				return x % y, nil
+			case token.AND:
+				return x & y, nil
+			case token.OR:
+				return x | y, nil
+			case token.XOR:
+				return x ^ y, nil
+			case token.AND_NOT:
+				return x &^ y, nil
+			case token.LSS:
+				return x < y, nil
+			case token.GTR:
+				return x > y, nil
+			case token.LEQ:
+				return x <= y, nil
+			case token.GEQ:
+				return x >= y, nil
+			case token.EQL:
+				return x == y, nil
+			case token.NEQ:
+				return x != y, nil
+			}
+		case int64:
+			x1, _ := strconv.Atoi(xI.(string))
+			x := int64(x1)
+			y := yI.(int64)
+			switch op {
+			case token.ADD:
+				return x + y, nil
+			case token.SUB:
+				return x - y, nil
+			case token.MUL:
+				return x * y, nil
+			case token.QUO:
+				return x / y, nil
+			case token.REM:
+				return x % y, nil
+			case token.AND:
+				return x & y, nil
+			case token.OR:
+				return x | y, nil
+			case token.XOR:
+				return x ^ y, nil
+			case token.AND_NOT:
+				return x &^ y, nil
+			case token.LSS:
+				return x < y, nil
+			case token.GTR:
+				return x > y, nil
+			case token.LEQ:
+				return x <= y, nil
+			case token.GEQ:
+				return x >= y, nil
+			case token.EQL:
+				return x == y, nil
+			case token.NEQ:
+				return x != y, nil
+			}
+		case uint:
+			x1, _ := strconv.Atoi(xI.(string))
+			x := uint(x1)
+			y := yI.(uint)
+			switch op {
+			case token.ADD:
+				return x + y, nil
+			case token.SUB:
+				return x - y, nil
+			case token.MUL:
+				return x * y, nil
+			case token.QUO:
+				return x / y, nil
+			case token.REM:
+				return x % y, nil
+			case token.AND:
+				return x & y, nil
+			case token.OR:
+				return x | y, nil
+			case token.XOR:
+				return x ^ y, nil
+			case token.AND_NOT:
+				return x &^ y, nil
+			case token.LSS:
+				return x < y, nil
+			case token.GTR:
+				return x > y, nil
+			case token.LEQ:
+				return x <= y, nil
+			case token.GEQ:
+				return x >= y, nil
+			case token.EQL:
+				return x == y, nil
+			case token.NEQ:
+				return x != y, nil
+			}
+		case uint8:
+			x1, _ := strconv.Atoi(xI.(string))
+			x := uint8(x1)
+			y := yI.(uint8)
+			switch op {
+			case token.ADD:
+				return x + y, nil
+			case token.SUB:
+				return x - y, nil
+			case token.MUL:
+				return x * y, nil
+			case token.QUO:
+				return x / y, nil
+			case token.REM:
+				return x % y, nil
+			case token.AND:
+				return x & y, nil
+			case token.OR:
+				return x | y, nil
+			case token.XOR:
+				return x ^ y, nil
+			case token.AND_NOT:
+				return x &^ y, nil
+			case token.LSS:
+				return x < y, nil
+			case token.GTR:
+				return x > y, nil
+			case token.LEQ:
+				return x <= y, nil
+			case token.GEQ:
+				return x >= y, nil
+			case token.EQL:
+				return x == y, nil
+			case token.NEQ:
+				return x != y, nil
+			}
+		case uint16:
+			x1, _ := strconv.Atoi(xI.(string))
+			x := uint16(x1)
+			y := yI.(uint16)
+			switch op {
+			case token.ADD:
+				return x + y, nil
+			case token.SUB:
+				return x - y, nil
+			case token.MUL:
+				return x * y, nil
+			case token.QUO:
+				return x / y, nil
+			case token.REM:
+				return x % y, nil
+			case token.AND:
+				return x & y, nil
+			case token.OR:
+				return x | y, nil
+			case token.XOR:
+				return x ^ y, nil
+			case token.AND_NOT:
+				return x &^ y, nil
+			case token.LSS:
+				return x < y, nil
+			case token.GTR:
+				return x > y, nil
+			case token.LEQ:
+				return x <= y, nil
+			case token.GEQ:
+				return x >= y, nil
+			case token.EQL:
+				return x == y, nil
+			case token.NEQ:
+				return x != y, nil
+			}
+		case uint32:
+			x1, _ := strconv.Atoi(xI.(string))
+			x := uint32(x1)
+			y := yI.(uint32)
+			switch op {
+			case token.ADD:
+				return x + y, nil
+			case token.SUB:
+				return x - y, nil
+			case token.MUL:
+				return x * y, nil
+			case token.QUO:
+				return x / y, nil
+			case token.REM:
+				return x % y, nil
+			case token.AND:
+				return x & y, nil
+			case token.OR:
+				return x | y, nil
+			case token.XOR:
+				return x ^ y, nil
+			case token.AND_NOT:
+				return x &^ y, nil
+			case token.LSS:
+				return x < y, nil
+			case token.GTR:
+				return x > y, nil
+			case token.LEQ:
+				return x <= y, nil
+			case token.GEQ:
+				return x >= y, nil
+			case token.EQL:
+				return x == y, nil
+			case token.NEQ:
+				return x != y, nil
+			}
+		case uint64:
+			x1, _ := strconv.Atoi(xI.(string))
+			x := uint64(x1)
+			y := yI.(uint64)
+			switch op {
+			case token.ADD:
+				return x + y, nil
+			case token.SUB:
+				return x - y, nil
+			case token.MUL:
+				return x * y, nil
+			case token.QUO:
+				return x / y, nil
+			case token.REM:
+				return x % y, nil
+			case token.AND:
+				return x & y, nil
+			case token.OR:
+				return x | y, nil
+			case token.XOR:
+				return x ^ y, nil
+			case token.AND_NOT:
+				return x &^ y, nil
+			case token.LSS:
+				return x < y, nil
+			case token.GTR:
+				return x > y, nil
+			case token.LEQ:
+				return x <= y, nil
+			case token.GEQ:
+				return x >= y, nil
+			case token.EQL:
+				return x == y, nil
+			case token.NEQ:
+				return x != y, nil
+			}
+		case float32:
+			x1, _ := strconv.ParseFloat(xI.(string), 64)
+			x := float32(x1)
+			y := yI.(float32)
+			switch op {
+			case token.ADD:
+				return x + y, nil
+			case token.SUB:
+				return x - y, nil
+			case token.MUL:
+				return x * y, nil
+			case token.QUO:
+				return x / y, nil
+			case token.LSS:
+				return x < y, nil
+			case token.GTR:
+				return x > y, nil
+			case token.LEQ:
+				return x <= y, nil
+			case token.GEQ:
+				return x >= y, nil
+			case token.EQL:
+				return x == y, nil
+			case token.NEQ:
+				return x != y, nil
+			}
+		case float64:
+			x, _ := strconv.ParseFloat(xI.(string), 64)
+			y := yI.(float64)
+			switch op {
+			case token.ADD:
+				return x + y, nil
+			case token.SUB:
+				return x - y, nil
+			case token.MUL:
+				return x * y, nil
+			case token.QUO:
+				return x / y, nil
+			case token.LSS:
+				return x < y, nil
+			case token.GTR:
+				return x > y, nil
+			case token.LEQ:
+				return x <= y, nil
+			case token.GEQ:
+				return x >= y, nil
+			case token.EQL:
+				return x == y, nil
+			case token.NEQ:
+				return x != y, nil
+			}
+		case bool:
+			var x bool
+			if xI.(string) == "true" {
+				x = true
+			} else {
+				x = false
+			}
 			y := yI.(bool)
 			switch op {
 			// Bool

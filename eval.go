@@ -7,6 +7,7 @@ import (
 	"go/ast"
 	"go/parser"
 	"go/token"
+	"net/url"
 	"reflect"
 	"strconv"
 )
@@ -24,8 +25,9 @@ var (
 
 // variable scope, recursive definition
 type Scope struct {
-	Vals   map[string]interface{} // all variables in current scope
-	Parent *Scope
+	Vals    map[string]interface{} // all variables in current scope
+	Parent  *Scope
+	userMap url.Values
 }
 
 // create a new variable scope
@@ -36,12 +38,32 @@ func NewScope() *Scope {
 	return s
 }
 
+func NewScopeWithUserMap(userMap url.Values) *Scope {
+	s := &Scope{
+		Vals:    map[string]interface{}{},
+		userMap: userMap,
+	}
+	return s
+}
+
 // search variable from inner-most scope
 func (scope *Scope) Get(name string) (val interface{}) {
 	currentScope := scope
 	exists := false
 	for !exists && currentScope != nil {
 		val, exists = currentScope.Vals[name]
+		currentScope = currentScope.Parent
+	}
+	return
+}
+
+//search variable from user map
+func (scope *Scope) GetFromUserMap(name string) (val string) {
+	currentScope := scope
+	exists := false
+
+	for !exists && currentScope != nil {
+		val = scope.userMap.Get(name)
 		currentScope = currentScope.Parent
 	}
 	return
@@ -105,6 +127,10 @@ func (scope *Scope) Interpret(expr ast.Node) (interface{}, error) {
 		}
 
 		if obj := scope.Get(e.Name); obj != nil {
+			return obj, nil
+		}
+
+		if obj := scope.GetFromUserMap(e.Name); obj != "" {
 			return obj, nil
 		}
 		return nil, fmt.Errorf("can't find EXPR %s", e.Name)
